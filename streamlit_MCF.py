@@ -122,40 +122,6 @@ def calcular_rendimientos(df):
 stocks_lista = ['AAPL', 'MSFT', 'GOOGL', 'TSLA', 'AMZN']
 distribuciones = ['Normal', 't-Student']
 
-# === DIAGNÓSTICO DE DESCARGA ===
-st.subheader("🔍 Diagnóstico de descarga de datos")
-
-tickers = ["AAPL", "MSFT", "GOOGL"]
-fecha_inicio = "2023-01-01"  # Ajusta a tu fecha
-fecha_fin = "2024-12-31"
-
-for ticker in tickers:
-    try:
-        st.write(f"Descargando {ticker}...")
-        datos = yf.download(ticker, start=fecha_inicio, end=fecha_fin, progress=False)
-        
-        if datos.empty:
-            st.error(f"❌ {ticker}: DataFrame VACÍO - No se descargaron datos")
-        else:
-            st.success(f"✅ {ticker}: {len(datos)} filas descargadas")
-            st.write(f"   Últimas fechas: {datos.index[0]} a {datos.index[-1]}")
-            st.write(f"   Columnas: {list(datos.columns)}")
-    except Exception as e:
-        st.error(f"❌ Error con {ticker}: {str(e)}")
-
-# También prueba con el método Ticker()
-st.write("---")
-st.write("Probando método alternativo Ticker()...")
-for ticker in tickers:
-    try:
-        ticker_obj = yf.Ticker(ticker)
-        info = ticker_obj.info
-        st.write(f"✅ {ticker}: info encontrada, 'regularMarketPrice': {info.get('regularMarketPrice', 'N/A')}")
-    except Exception as e:
-        st.error(f"❌ Error con info de {ticker}: {e}")
-
-st.stop()  # Esto detiene la ejecución aquí para que solo veas el diagnóstico
-
 with st.spinner("Descargando datos..."):
     df_precios = obtener_datos(stocks_lista)
     df_rendimientos = calcular_rendimientos(df_precios)
