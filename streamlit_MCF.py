@@ -1,6 +1,9 @@
 import pandas as pd
 import streamlit as st
 import numpy as np
+CACHE_DIR = ".cache"
+ad.user_cache_dir = lambda *args: CACHE_DIR
+Path(CACHE_DIR).mkdir(exist_ok=True)
 import yfinance as yf
 import matplotlib.pyplot as plt
 from scipy.stats import kurtosis, skew ,norm, shapiro
